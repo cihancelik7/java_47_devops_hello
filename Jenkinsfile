@@ -27,7 +27,7 @@ pipeline {
 
         stage('Docker Image') {
             steps {
-                sh 'docker build --platform linux/arm64 -t ${IMAGE_NAME} .'
+                sh 'docker build --platform linux/arm64 -t cihan0203/devops-application .'
             }
         }
 
@@ -35,8 +35,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                        sh 'docker login -u ${IMAGE_USERNAME} -p ${dockerhub}'
-                        sh 'docker push ${IMAGE_NAME}:latest'
+                        sh 'docker login -u cihan0203 -p ${dockerhub}'
+                        sh 'docker push cihan0203/devops-application:latest'
                     }
                 }
             }
