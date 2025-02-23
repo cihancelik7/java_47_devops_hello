@@ -11,7 +11,6 @@ pipeline {
                 steps {
                     sh 'mvn test'
                 }
-            }
 
     stages {
         stage('Build Maven') {
