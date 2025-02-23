@@ -6,12 +6,12 @@ pipeline {
         // java 'Java21'
     }
 
-     stages {
-            stage('Test Mvn') {
-                steps {
-                    sh 'mvn test'
-                }
-                }
+    stages {
+        stage('Test Mvn') {
+            steps {
+                sh 'mvn test'
+            }
+        }
 
         stage('Build Maven') {
             steps {
@@ -19,9 +19,10 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
+
         stage('Docker Image') {
             steps {
-               sh 'docker build --platform linux/arm64 -t cihan0203/devops-application .'
+                sh 'docker build --platform linux/arm64 -t cihan0203/devops-application .'
             }
         }
 
@@ -34,15 +35,14 @@ pipeline {
                     }
                 }
             }
+        }
 
         stage('Deploy 2 K8s') {
             steps {
-                script{
+                script {
                     kubernetesDeploy configs: 'deploymentservice.yaml', kubeConfig: [path: ''], kubeconfigId: 'kubernetes', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
                 }
-
             }
         }
-
     }
 }
