@@ -12,9 +12,7 @@ pipeline {
                     sh 'mvn test'
                 }
                 }
-        }
 
-    stages {
         stage('Build Maven') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cihancelik7/java_47_devops_hello']])
@@ -36,7 +34,6 @@ pipeline {
                     }
                 }
             }
-        }
 
         stage('Deploy 2 K8s') {
             steps {
