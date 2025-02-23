@@ -30,8 +30,11 @@ pipeline {
             }
         }
 
-        stage('Kubernetes Pod') {
+        stage('Deploy 2 K8s') {
             steps {
+                script{
+                    kubernetesDeploy configs: 'deploymentservice.yaml', kubeConfig: [path: ''], kubeconfigId: 'kubernetes', secretName: '', ssh: [sshCredentialsId: '*', sshServer: ''], textCredentials: [certificateAuthorityData: '', clientCertificateData: '', clientKeyData: '', serverUrl: 'https://']
+                }
 
             }
         }
