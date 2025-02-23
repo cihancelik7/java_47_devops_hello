@@ -15,7 +15,7 @@ pipeline {
         }
         stage('Docker Image') {
             steps {
-                sh 'docker build --platform linux/amd64 -t cihan0203/devops-application .'
+               sh 'docker build --platform linux/arm64 -t cihan0203/devops-application .'
             }
         }
 
