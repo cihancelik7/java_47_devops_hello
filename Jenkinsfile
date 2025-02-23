@@ -6,7 +6,7 @@ pipeline {
         // java 'Java21'
     }
     environment {
-        IMAGE_NAME = 'true'
+        IMAGE_NAME = 'cihan0203/devops-application'
         IMAGE_USERNAME = 'cihan0203'
         GIT_URL = 'https://github.com/cihancelik7/java_47_devops_hello'
     }
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Docker Image') {
             steps {
-                sh 'docker build --platform linux/arm64 -t ${IMAGE_USERNAME}/devops-application .'
+                sh 'docker build --platform linux/arm64 -t ${IMAGE_NAME} .'
             }
         }
 
@@ -36,7 +36,7 @@ pipeline {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
                         sh 'docker login -u ${IMAGE_USERNAME} -p ${dockerhub}'
-                        sh 'docker push ${IMAGE_USERNAME}/devops-application:latest'
+                        sh 'docker push ${IMAGE_NAME}:latest'
                     }
                 }
             }
