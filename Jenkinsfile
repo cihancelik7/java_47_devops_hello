@@ -5,6 +5,11 @@ pipeline {
         maven 'Maven3'
         // java 'Java21'
     }
+    environment {
+        IMAGE_NAME = 'true'
+        IMAGE_USERNAME = 'cihan0203'
+        GIT_URL = 'https://github.com/cihancelik7/java_47_devops_hello'
+    }
 
     stages {
         stage('Test Mvn') {
@@ -15,14 +20,14 @@ pipeline {
 
         stage('Build Maven') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/cihancelik7/java_47_devops_hello']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: GIT_URL]])
                 sh 'mvn clean install'
             }
         }
 
         stage('Docker Image') {
             steps {
-                sh 'docker build --platform linux/arm64 -t cihan0203/devops-application .'
+                sh 'docker build --platform linux/arm64 -t ${IMAGE_USERNAME}/devops-application .'
             }
         }
 
@@ -30,8 +35,8 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                        sh 'docker login -u cihan0203 -p ${dockerhub}'
-                        sh 'docker push cihan0203/devops-application:latest'
+                        sh 'docker login -u ${IMAGE_USERNAME} -p ${dockerhub}'
+                        sh 'docker push ${IMAGE_USERNAME}/devops-application:latest'
                     }
                 }
             }
