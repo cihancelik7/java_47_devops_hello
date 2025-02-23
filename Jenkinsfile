@@ -6,6 +6,13 @@ pipeline {
         // java 'Java21'
     }
 
+     stages {
+            stage('Test Mvn') {
+                steps {
+                    sh 'mvn test'
+                }
+            }
+
     stages {
         stage('Build Maven') {
             steps {
